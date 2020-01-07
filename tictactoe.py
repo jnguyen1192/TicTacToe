@@ -32,7 +32,7 @@ class tictactoe:
             board.append(line)
         return board
 
-    def print_board_state(self):
+    def print_board_state(self, board):
         """
         Print the current state
         :return: 0 if it works else -1
@@ -41,11 +41,11 @@ class tictactoe:
             str_board = ""
             for y in range(self.height):
                 for x in range(self.width):
-                    if self.board[y][x] == 0:
+                    if board[y][x] == 0:
                         str_board += "X"
-                    if self.board[y][x] == 1:
+                    if board[y][x] == 1:
                         str_board += "O"
-                    if self.board[y][x] == -1:
+                    if board[y][x] == -1:
                         str_board += "."
                 str_board += "\n"
             print(str_board)
@@ -98,7 +98,7 @@ class tictactoe:
         print("Welcome to tic tac toe")
         while not self.end:
             print("Player", self.players[self.current_player], "need to play")
-            self.print_board_state()
+            self.print_board_state(self.board)
             # give input
             new_input = input()
             y, x = [int(_) for _ in new_input.split(" ")]
@@ -119,7 +119,7 @@ class tictactoe:
         for index, player_1_move in enumerate(player_1_moves):
             next_moves.append(player_1_moves[index])
             next_moves.append(player_2_moves[index])
-        print("Welcome to tic tac toe using predefine moves")
+        #print("Welcome to tic tac toe using predefine moves")
         i = 0
         while not self.end:
             y, x = next_moves[i]
@@ -131,8 +131,8 @@ class tictactoe:
                 break
             i += 1
             self.current_player = (self.current_player + 1) % 2
-        self.print_board_state()
-        print("Player", self.players[self.current_player], "will win with those predefine moves")
+        #self.print_board_state(self.board)
+        #print("Player", self.players[self.current_player], "will win with those predefine moves")
 
     def run(self, player_1_moves=[], player_2_moves=[]):
         """
@@ -144,6 +144,7 @@ class tictactoe:
                 self.run_normal_game()
             else:
                 self.run_predefine_game(player_1_moves, player_2_moves)
+            return self.board
         except Exception as e:
             print(e)
             return -1
