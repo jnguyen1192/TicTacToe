@@ -1,3 +1,5 @@
+import random
+
 class tictactoe:
     """
     A class that represent the game
@@ -90,6 +92,19 @@ class tictactoe:
         if is_end:
             return True
         return False
+
+    def get_random_move(self):
+        """
+        Return an available move on the board
+        :return: the coordinate of the move as (y, x)
+        """
+        available_moves = []
+        for i_lines, lines in enumerate(self.board):
+            for i_columns, columns in enumerate(lines):
+                if columns == '.':
+                    available_moves.append((i_lines, i_columns))
+        random_int = random.randint(0, len(available_moves))
+        return available_moves[random_int]
 
     def run_normal_game(self):
         """
