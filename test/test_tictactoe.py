@@ -20,6 +20,7 @@ class TestTicTacToe(unittest.TestCase):
         OO.
         ...
         """
+        # TODO implement
         player_1_moves = [(0, 0), (0, 1), (0, 2)]
         player_2_moves = [(1, 0), (1, 1), (1, 2)]
         self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
@@ -31,6 +32,7 @@ class TestTicTacToe(unittest.TestCase):
         OXO
         ..X
         """
+        # TODO implement
         player_1_moves = [(0, 0), (1, 1), (2, 2)]
         player_2_moves = [(1, 0), (1, 2), (2, 1)]
         self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
@@ -42,9 +44,16 @@ class TestTicTacToe(unittest.TestCase):
         X0X
         ..0
         """
+        # TODO implement
         player_1_moves = [(1, 0), (1, 2), (2, 1)]
         player_2_moves = [(0, 0), (1, 1), (2, 2)]
         self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
+
+    def test_get_random_move(self):
+        """
+        Test if function get_random_move works
+        """
+        # TODO implement
 
 
 if __name__ == '__main__':
