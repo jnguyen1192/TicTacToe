@@ -101,9 +101,10 @@ class tictactoe:
         available_moves = []
         for i_lines, lines in enumerate(self.board):
             for i_columns, columns in enumerate(lines):
-                if columns == '.':
+                if columns == -1:
                     available_moves.append((i_lines, i_columns))
-        random_int = random.randint(0, len(available_moves))
+        # Get a random int between 0 and the size of available_moves less one
+        random_int = random.randint(0, len(available_moves) - 1)
         return available_moves[random_int]
 
     def run_normal_game(self):

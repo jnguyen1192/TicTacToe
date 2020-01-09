@@ -53,7 +53,10 @@ class TestTicTacToe(unittest.TestCase):
         """
         Test if function get_random_move works
         """
-        # TODO implement
+        for i in range(1000):
+            y, x = self.ttt.get_random_move()
+            assert (y < self.ttt.height)
+            assert (x < self.ttt.height)
 
 
 if __name__ == '__main__':
