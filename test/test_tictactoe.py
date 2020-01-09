@@ -56,7 +56,7 @@ class TestTicTacToe(unittest.TestCase):
         for i in range(1000):
             y, x = self.ttt.get_random_move()
             assert (y < self.ttt.height)
-            assert (x < self.ttt.height)
+            assert (x < self.ttt.width)
 
 
 if __name__ == '__main__':
