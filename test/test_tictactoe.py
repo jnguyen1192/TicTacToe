@@ -75,6 +75,8 @@ class TestTicTacToe(unittest.TestCase):
         #print(self.ttt.run(random_game=True))
         print("test_run_random_game\n")
         states, winner = self.ttt.run(random_game=True)
+        for state in states:
+            self.ttt.print_board_state(state)
         self.ttt.print_board_state(states[-1])
         print("Winner :", winner, "\n\n")
 

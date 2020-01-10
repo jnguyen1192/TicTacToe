@@ -1,4 +1,6 @@
 import random
+import copy
+
 
 class tictactoe:
     """
@@ -148,7 +150,8 @@ class tictactoe:
             #print("random_move", y, x)
             # put in board
             self.board[y][x] = self.current_player
-            self.states.append(self.board)
+            current_state = copy.deepcopy(self.board)
+            self.states.append(current_state)
             # check if it wins
             if self.is_current_player_win():
                 self.end = True
