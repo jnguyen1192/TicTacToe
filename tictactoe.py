@@ -14,6 +14,8 @@ class tictactoe:
         self.players = [player_1, player_2]
         self.current_player = 0
         self.end = False
+        self.states = []
+        self.winner = -1
 
     def init_board(self):
         """
@@ -113,27 +115,29 @@ class tictactoe:
         """
         Run the game using input
         """
-        print("Welcome to tic tac toe")
+        #print("Welcome to tic tac toe")
         while not self.end:
-            print("Player", self.players[self.current_player], "need to play")
-            self.print_board_state(self.board)
+            #print("Player", self.players[self.current_player], "need to play")
+            #self.print_board_state(self.board)
             # give input
             new_input = input()
             y, x = [int(_) for _ in new_input.split(" ")]
             # put in board
             self.board[y][x] = self.current_player
+            self.states.append(self.board)
             # check if it wins
             if self.is_current_player_win():
                 self.end = True
+                self.winner = self.players[self.current_player]
                 break
             self.current_player = (self.current_player + 1) % 2
-        print("Player", self.players[self.current_player], "wins")
+        #print("Player", self.players[self.current_player], "wins")
 
     def run_random_game(self):
         """
         Run the game using input
         """
-        print("Welcome to tic tac toe random game")
+        #print("Welcome to tic tac toe random game")
         while not self.end:
             #print("Player", self.players[self.current_player], "play a random move")
             #self.print_board_state(self.board)
@@ -144,16 +148,18 @@ class tictactoe:
             #print("random_move", y, x)
             # put in board
             self.board[y][x] = self.current_player
+            self.states.append(self.board)
             # check if it wins
             if self.is_current_player_win():
                 self.end = True
+                self.winner = self.players[self.current_player]
                 break
             self.current_player = (self.current_player + 1) % 2
 
-        if self.end:
-            print("Player", self.players[self.current_player], "wins")
-        else:
-            print("Draw")
+        #if self.end:
+        #    print("Player", self.players[self.current_player], "wins")
+        #else:
+        #    print("Draw")
 
     def run_predefine_game(self, player_1_moves, player_2_moves):
         """
@@ -169,9 +175,11 @@ class tictactoe:
             y, x = next_moves[i]
             # put in board
             self.board[y][x] = self.current_player
+            self.states.append(self.board)
             # check if it wins
             if self.is_current_player_win():
                 self.end = True
+                self.winner = self.players[self.current_player]
                 break
             i += 1
             self.current_player = (self.current_player + 1) % 2
@@ -181,7 +189,7 @@ class tictactoe:
     def run(self, player_1_moves=[], player_2_moves=[], random_game=False):
         """
         The function that launch a game
-        :return: 0 if it works else -1
+        :return: the states as a list, the winner if it works else -1
         """
         try:
             if random_game:
@@ -190,7 +198,7 @@ class tictactoe:
                 self.run_normal_game()
             else:
                 self.run_predefine_game(player_1_moves, player_2_moves)
-            return self.board
+            return self.states, self.winner
         except Exception as e:
             print(e)
             return -1

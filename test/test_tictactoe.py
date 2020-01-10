@@ -9,9 +9,8 @@ class TestTicTacToe(unittest.TestCase):
         self.ttt = tictactoe.tictactoe()
 
     def test_constructor_tictactoe(self):
-        from pprint import pprint
-        pprint(self.ttt.board)
-        assert (True==True)
+        # TODO implement
+        assert True
 
     def test_get_random_move(self):
         """
@@ -32,7 +31,10 @@ class TestTicTacToe(unittest.TestCase):
         # TODO implement
         player_1_moves = [(0, 0), (0, 1), (0, 2)]
         player_2_moves = [(1, 0), (1, 1), (1, 2)]
-        self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
+        print("test_run_predefine_game_1\n")
+        states, winner = self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves)
+        self.ttt.print_board_state(states[-1])
+        print("Winner :", winner, "\n\n")
 
     def test_run_predefine_game_2(self):
         """
@@ -44,7 +46,10 @@ class TestTicTacToe(unittest.TestCase):
         # TODO implement
         player_1_moves = [(0, 0), (1, 1), (2, 2)]
         player_2_moves = [(1, 0), (1, 2), (2, 1)]
-        self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
+        print("test_run_predefine_game_2\n")
+        states, winner = self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves)
+        self.ttt.print_board_state(states[-1])
+        print("Winner :", winner, "\n\n")
 
     def test_run_predefine_game_3(self):
         """
@@ -56,7 +61,10 @@ class TestTicTacToe(unittest.TestCase):
         # TODO implement
         player_1_moves = [(1, 0), (1, 2), (2, 1)]
         player_2_moves = [(0, 0), (1, 1), (2, 2)]
-        self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
+        print("test_run_predefine_game_3\n")
+        states, winner = self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves)
+        self.ttt.print_board_state(states[-1])
+        print("Winner :", winner, "\n\n")
 
     def test_run_random_game(self):
         """
@@ -64,7 +72,11 @@ class TestTicTacToe(unittest.TestCase):
         Check if 100 games end correctly
         """
         # TODO implement
-        self.ttt.print_board_state(self.ttt.run(random_game=True))
+        #print(self.ttt.run(random_game=True))
+        print("test_run_random_game\n")
+        states, winner = self.ttt.run(random_game=True)
+        self.ttt.print_board_state(states[-1])
+        print("Winner :", winner, "\n\n")
 
 
 if __name__ == '__main__':
