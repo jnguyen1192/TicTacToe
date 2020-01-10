@@ -13,6 +13,15 @@ class TestTicTacToe(unittest.TestCase):
         pprint(self.ttt.board)
         assert (True==True)
 
+    def test_get_random_move(self):
+        """
+        Test if function get_random_move works
+        """
+        for i in range(1000):
+            y, x = self.ttt.get_random_move()
+            assert (y < self.ttt.height)
+            assert (x < self.ttt.width)
+
     def test_run_predefine_game_1(self):
         """
         Test if function run works with the predefine moves
@@ -49,14 +58,13 @@ class TestTicTacToe(unittest.TestCase):
         player_2_moves = [(0, 0), (1, 1), (2, 2)]
         self.ttt.print_board_state(self.ttt.run(player_1_moves=player_1_moves, player_2_moves=player_2_moves))
 
-    def test_get_random_move(self):
+    def test_run_random_game(self):
         """
-        Test if function get_random_move works
+        Test if function run works with random_moves
+        Check if 100 games end correctly
         """
-        for i in range(1000):
-            y, x = self.ttt.get_random_move()
-            assert (y < self.ttt.height)
-            assert (x < self.ttt.width)
+        # TODO implement
+        self.ttt.print_board_state(self.ttt.run(random_game=True))
 
 
 if __name__ == '__main__':

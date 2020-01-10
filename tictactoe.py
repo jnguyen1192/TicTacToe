@@ -104,6 +104,8 @@ class tictactoe:
                 if columns == -1:
                     available_moves.append((i_lines, i_columns))
         # Get a random int between 0 and the size of available_moves less one
+        if len(available_moves) == 0:
+            return None, None
         random_int = random.randint(0, len(available_moves) - 1)
         return available_moves[random_int]
 
@@ -126,6 +128,32 @@ class tictactoe:
                 break
             self.current_player = (self.current_player + 1) % 2
         print("Player", self.players[self.current_player], "wins")
+
+    def run_random_game(self):
+        """
+        Run the game using input
+        """
+        print("Welcome to tic tac toe random game")
+        while not self.end:
+            #print("Player", self.players[self.current_player], "play a random move")
+            #self.print_board_state(self.board)
+            # get random move
+            y, x = self.get_random_move()
+            if (y, x) == (None, None):
+                break
+            #print("random_move", y, x)
+            # put in board
+            self.board[y][x] = self.current_player
+            # check if it wins
+            if self.is_current_player_win():
+                self.end = True
+                break
+            self.current_player = (self.current_player + 1) % 2
+
+        if self.end:
+            print("Player", self.players[self.current_player], "wins")
+        else:
+            print("Draw")
 
     def run_predefine_game(self, player_1_moves, player_2_moves):
         """
@@ -150,13 +178,15 @@ class tictactoe:
         #self.print_board_state(self.board)
         #print("Player", self.players[self.current_player], "will win with those predefine moves")
 
-    def run(self, player_1_moves=[], player_2_moves=[]):
+    def run(self, player_1_moves=[], player_2_moves=[], random_game=False):
         """
         The function that launch a game
         :return: 0 if it works else -1
         """
         try:
-            if len(player_1_moves) == 0:
+            if random_game:
+                self.run_random_game()
+            elif len(player_1_moves) == 0:
                 self.run_normal_game()
             else:
                 self.run_predefine_game(player_1_moves, player_2_moves)
