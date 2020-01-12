@@ -60,12 +60,35 @@ def is_container_exist(name):
     return True
 
 
+def clean_image(name):
+    """
+    Remove the image using the name of the image
+    :param name: the image name
+    :return: 0 if it works else -1
+    """
+    client = docker.from_env()
+    kwargs = kwargs_from_env()
+    api_client = docker.APIClient(**kwargs)
+    try:
+        for i in client.images.list():
+            if len(i.__getattribute__("tags")) != 0:
+                # TODO to optimize
+                if i.__getattribute__("tags")[0].find(name) != -1:
+                    api_client.remove_image(name)
+        client.close()
+        api_client.close()
+        return 0
+    except Exception as e:
+        print(e)
+        client.close()
+        api_client.close()
+        return -1
+
+
 def clean_container(name):
     """
-    Run the correponding container using the same image and container name
-    :param client: the docker client
-    :param api_client: the docker client api
-    :param name_container: the container name
+    Remove the correponding container using the name of the container
+    :param name: the container name
     :return: 0 if it works else -1
     """
     client = docker.from_env()

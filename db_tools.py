@@ -19,12 +19,12 @@ def run_db(container_name="postgres", image_name="postgres", port=5432):
                        "POSTGRES_USER=postgres",
                        "POSTGRES_PASSWORD=postgres"]
         # restart a container
-        dtt.clean_container("c_sai_" + container_name)
+        dtt.clean_container("c_ttt_" + container_name)
 
         # to test pg database https://www.enterprisedb.com/download-postgresql-binaries
         # to connect to the database enter the ip of docker
-        container = client.containers.run(image="c_sai_" + image_name,
-                                    name="c_sai_" + container_name,
+        container = client.containers.run(image="c_ttt_" + image_name,
+                                    name="c_ttt_" + container_name,
                                     pid_mode="host",
                                     #volumes=volumes,
                                     ports=ports,
@@ -58,12 +58,12 @@ def create_image_using_dockerfile(name):
     try:
         # TODO Option 2 : use subprocess to use cmd from win
         # Prod way
-        res = subprocess.run(["cmd", "/c", "docker", "build", "-f", os.path.join(get_pwd(), "Dockerfile." + name), get_pwd(), "-t", "c_sai_" + name],
+        res = subprocess.run(["cmd", "/c", "docker", "build", "-f", os.path.join(get_pwd(), "Dockerfile." + name), get_pwd(), "-t", "c_ttt_" + name],
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if res.returncode != 0:
             print("Error code", res.returncode)
             # Dev way
-            res = subprocess.run(["cmd", "/c", "docker", "build", "-f", os.path.join(get_pwd(), "Dockerfile." + name), get_pwd(), "-t", "c_sai_" + name])
+            res = subprocess.run(["cmd", "/c", "docker", "build", "-f", os.path.join(get_pwd(), "Dockerfile." + name), get_pwd(), "-t", "c_ttt_" + name])
 
         # docker build -f Dockerfile.backup . -t c_sai_backup
         #print(type(res.returncode), res.returncode)
