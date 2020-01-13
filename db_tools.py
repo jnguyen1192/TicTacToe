@@ -7,7 +7,7 @@ from datetime import datetime
 import docker_tools as dtt
 
 
-def run_db(container_name="postgres", image_name="postgres", port=5435):
+def run_db(container_name="postgres", image_name="postgres", port=5432):
     """
     Create the postgres container and run it
     :return: 0 if it works else -1
@@ -96,12 +96,12 @@ def run_backup():
         #print("Image building...")
         #print("Image builded")
         # restart a container
-        dtt.clean_container("c_sai_backup")
+        dtt.clean_container("c_ttt_backup")
 
         # to test pg database https://www.enterprisedb.com/download-postgresql-binaries
         # to connect to the database enter the ip of docker
-        container = client.containers.run(image="c_sai_backup",
-                                    name="c_sai_backup",
+        container = client.containers.run(image="c_ttt_backup",
+                                    name="c_ttt_backup",
                                     pid_mode="host",
                                     volumes=volumes,
                                     environment=environment,
@@ -158,15 +158,44 @@ def load_last_backup(container_name, db_user="postgres", db_name="postgres"):
         return -1
 
 
-def wait_db_connection(test=False, nb_retry=120, time_sleep=1):
+def new_backup():
+    """
+    Create a backup using the corresponding container
+    :return: the file name if it works else -1
+    """
+    # TODO
+    #   Use this command to connect to the DB on the container
+    #       PGPASSWORD=postgres pgsql -h 192.168.99.100 -p 5432 -U postgres
+    file_name = datetime.now().replace(microsecond=0).strftime("%Y%m%dT%H%M%S") + "_postgres.sql"
+    res = subprocess.run(
+        ["cmd", "/c", "docker", "exec", "-t", "c_ttt_postgres", "pg_dump", "-c", "-U", "postgres", ">", os.path.join(get_pwd(), "backup_postgres", file_name)],
+        capture_output=True)
+    if res.returncode != 0:
+        return -1
+    return file_name
+
+
+def remove_backup(file_name):
+    """
+    Remove the given backup
+    :param file_name: the backup file name
+    :return: 0 if it works else -1
+    """
+    res = subprocess.run(
+        ["cmd", "/c", "del", "/f", os.path.join(get_pwd(), "backup_postgres", file_name)],
+        capture_output=True)
+    if res.returncode != 0:
+        return -1
+    return 0
+
+
+def wait_db_connection(port=5432, test=False, nb_retry=120, time_sleep=1):
     """
     Wait the database connection
     :return: 0 if it works else -1
     """
     if test:
         port = "5433"
-    else:
-        port = "5432"
     i = 0
     while i < nb_retry:
         try:
@@ -289,34 +318,3 @@ def select_one_with_parameters(query, parameters, test=False):
             # closing database connection.
             cursor.close()
             connection.close()
-
-
-def new_backup():
-    """
-    Create a backup using the corresponding container
-    :return: the file name if it works else -1
-    """
-    # TODO
-    #   Use this command to connect to the DB on the container
-    #       PGPASSWORD=postgres pgsql -h 192.168.99.100 -p 5432 -U postgres
-    file_name = datetime.now().replace(microsecond=0).strftime("%Y%m%dT%H%M%S") + "_postgres.sql"
-    res = subprocess.run(
-        ["cmd", "/c", "docker", "exec", "-t", "c_sai_postgres", "pg_dump", "-c", "-U", "postgres", ">", os.path.join(get_pwd(), "backup_postgres", file_name)],
-        capture_output=True)
-    if res.returncode != 0:
-        return -1
-    return file_name
-
-
-def remove_backup(file_name):
-    """
-    Remove the given backup
-    :param file_name: the backup file name
-    :return: 0 if it works else -1
-    """
-    res = subprocess.run(
-        ["cmd", "/c", "del", "/f", os.path.join(get_pwd(), "backup_postgres", file_name)],
-        capture_output=True)
-    if res.returncode != 0:
-        return -1
-    return 0

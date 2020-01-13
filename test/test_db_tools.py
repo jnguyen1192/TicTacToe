@@ -19,44 +19,61 @@ class TestDbTools(unittest.TestCase):
         assert dbt.dtt.clean_image("c_ttt_" + image_name) == 0
         assert not dbt.dtt.is_image_exist("c_ttt_" + image_name)
 
-
-
-    def generic_db_tools_all_tables_created(self, test=False):
+    def generic_db_tools_all_tables_created(self, tables_name, test=False):
         """
         Function to test if tables exist
         :return:
         """
-        tables_name = ['Strategie', 'Action', 'Has_action']
         for name in tables_name:
             res = dbt.select_one_with_parameters(sqt.IS_TABLE_EXISTS, (name,), test)
             assert(res != -1)
             assert res
 
-    def test_db_tools_all_tables_created(self):
-        """
-        Test if all the tables are created
-        """
-        self.generic_db_tools_all_tables_created()
-
     def test_run_db(self):
         """
         Test if the db works
         """
-        image_name = "postgres"
-        # TODO implement
-        #   Create image of the db
-        # create postgres image
-        assert dbt.create_image_using_dockerfile(image_name) == 0
-        #   Launch the db
-        assert dbt.run_db() == 0
-        #   TODO Check if the tables exist
-        #self.generic_db_tools_all_tables_created()
-        #   Remove container and image
-        # remove image
-        assert dbt.dtt.clean_image("c_ttt_" + image_name) == 0
-        assert not dbt.dtt.is_image_exist("c_ttt_" + image_name)
+        name = "postgres"
+        # Create postgres image
+        assert dbt.create_image_using_dockerfile(name) == 0
+        # Launch the db
+        assert dbt.run_db(port=5435) == 0
+        assert dbt.wait_db_connection(port=5435) == 0
+        # Check if the tables exist
+        tables_name = ['State']
+        self.generic_db_tools_all_tables_created(tables_name)
+        # Remove container and image
+        assert dbt.dtt.clean_container("c_ttt_" + name) == 0
+        # Remove image
+        assert dbt.dtt.clean_image("c_ttt_" + name) == 0
+        assert not dbt.dtt.is_image_exist("c_ttt_" + name)
 
-        assert True
+    def test_create_backup(self):
+        """
+        Check if backup from db works
+        """
+        name = "postgres"
+        # create postgres image
+        assert dbt.create_image_using_dockerfile(name) == 0
+        #   Launch the db
+        assert dbt.run_db(port=5435) == 0
+
+"""
+    def test_first_backup(self):
+        #Create a backup with the table state
+        name = "backup"
+        # create postgres image
+        assert dbt.create_image_using_dockerfile(name) == 0
+        #   Launch the db
+        assert dbt.run_backup() == 0
+        # TODO launch backup
+        assert dbt.new_backup() != -1
+        #   Remove container and image
+        assert dbt.dtt.clean_container("c_ttt_" + name) == 0
+        # remove image
+        assert dbt.dtt.clean_image("c_ttt_" + name) == 0
+        assert not dbt.dtt.is_image_exist("c_ttt_" + name)
+"""
 
 
 if __name__ == '__main__':

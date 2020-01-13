@@ -1,0 +1,10 @@
+#   TODO Use an ubuntu version
+# Pull base image.
+FROM ubuntu:18.04
+#   TODO install postgres
+RUN apt-get update && apt-get install -y \
+    postgresql \
+    postgresql-contrib \
+    postgresql-client
+#RUN apt-get install postgresql postgresql-contrib
+#   TODO create a cron which backup every day at 5:00 AM
