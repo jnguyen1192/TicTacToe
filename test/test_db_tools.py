@@ -25,7 +25,7 @@ class TestDbTools(unittest.TestCase):
         :return:
         """
         for name in tables_name:
-            res = dbt.select_one_with_parameters(sqt.IS_TABLE_EXISTS, (name,), test)
+            res = dbt.select_one_with_parameters(sqt.IS_TABLE_EXISTS, (name,), port="5435")
             assert(res != -1)
             assert res
 
@@ -48,17 +48,14 @@ class TestDbTools(unittest.TestCase):
         assert dbt.dtt.clean_image("c_ttt_" + name) == 0
         assert not dbt.dtt.is_image_exist("c_ttt_" + name)
 
+"""
     def test_create_backup(self):
-        """
-        Check if backup from db works
-        """
         name = "postgres"
         # create postgres image
         assert dbt.create_image_using_dockerfile(name) == 0
         #   Launch the db
         assert dbt.run_db(port=5435) == 0
 
-"""
     def test_first_backup(self):
         #Create a backup with the table state
         name = "backup"

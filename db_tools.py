@@ -31,7 +31,7 @@ def run_db(container_name="postgres", image_name="postgres", port=5432):
                                     environment=environment,
                                     detach=True)
         # TODO debug log here
-        #print(container.logs().decode('utf8'))
+        print(container.logs().decode('utf8'))
         client.close()
         return 0
     except Exception as e:
@@ -286,15 +286,13 @@ def query_with_parameters(query, parameters, test=False):
             #print("PostgreSQL connection is closed")
 
 
-def select_one_with_parameters(query, parameters, test=False):
+def select_one_with_parameters(query, parameters, port=5432, test=False):
     """
     Select one result on the database with parameters
     :return: 0 if it works else -1
     """
     if test:
         port = "5433"
-    else:
-        port = "5432"
     connection = ""
     cursor = ""
     try:

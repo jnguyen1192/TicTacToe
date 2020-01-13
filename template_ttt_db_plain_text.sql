@@ -16,10 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE ONLY public."State" DROP CONSTRAINT "State_pkey";
-ALTER TABLE public."State" ALTER COLUMN id DROP DEFAULT;
-DROP SEQUENCE public."State_id_seq";
-DROP TABLE public."State";
 SET default_tablespace = '';
 
 SET default_with_oids = false;
