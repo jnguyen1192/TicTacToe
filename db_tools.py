@@ -7,7 +7,7 @@ from datetime import datetime
 import docker_tools as dtt
 
 
-def run_db(container_name="postgres", image_name="postgres", port=5432):
+def run_db(container_name="postgres", image_name="postgres", port=5435):
     """
     Create the postgres container and run it
     :return: 0 if it works else -1
