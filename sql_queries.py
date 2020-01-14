@@ -33,3 +33,7 @@ IS_RAW_EXISTS_ON_ACTION = """SELECT EXISTS (
    FROM   "Action" 
    WHERE  name = %s
    );"""
+
+INSERT_ON_STATE = """INSERT INTO public."State"(
+    board, "n°move", method)
+    VALUES (%s, %s, %s)"""

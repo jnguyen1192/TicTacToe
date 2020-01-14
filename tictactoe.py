@@ -6,7 +6,7 @@ class tictactoe:
     """
     A class that represent the game
     """
-    def __init__(self, player_1="player_1", player_2="player_2", width=3, height=3):
+    def __init__(self, player_1=0, player_2=1, width=3, height=3):
         """
         The game will have two players with names, a board and a score
         """

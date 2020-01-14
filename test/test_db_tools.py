@@ -3,8 +3,13 @@ import unittest
 import db_tools as dbt
 import sql_queries as sqt
 
+import tictactoe
+
 
 class TestDbTools(unittest.TestCase):
+
+    def setUp(self):
+        self.ttt = tictactoe.tictactoe()
 
     def test_create_image_postgres(self):
         """
@@ -19,7 +24,7 @@ class TestDbTools(unittest.TestCase):
         assert dbt.dtt.clean_image("c_ttt_" + image_name) == 0
         assert not dbt.dtt.is_image_exist("c_ttt_" + image_name)
 
-    def generic_db_tools_all_tables_created(self, tables_name, test=False):
+    def generic_db_tools_all_tables_created(self, tables_name):
         """
         Function to test if tables exist
         :return:
@@ -47,6 +52,24 @@ class TestDbTools(unittest.TestCase):
         # Remove image
         assert dbt.dtt.clean_image("c_ttt_" + name) == 0
         assert not dbt.dtt.is_image_exist("c_ttt_" + name)
+
+    def test_insert_new_state(self):
+        """
+        Test if function insert_new_state works
+        """
+        method = ""
+        states, winner = self.ttt.run(random_game=True)
+        print(states)
+        if winner == 0:
+            method = "reward"
+            print("reward")
+        if winner == 1:
+            method = "penalize"
+            print("penalize")
+        if method != "":
+            # TODO il faudrait que l'algo puisse rapidement comprendre que le triangle rend un match nul et que le plateau possede plusieurs symétries
+            print("insert on table state")
+
 
 """
     def test_create_backup(self):
