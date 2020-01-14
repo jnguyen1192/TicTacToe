@@ -59,7 +59,11 @@ class TestDbTools(unittest.TestCase):
         """
         method = ""
         states, winner = self.ttt.run(random_game=True)
-        print(states)
+        for index_state, state in enumerate(states):
+            parameters = (state,)
+            dbt.query_with_parameters(sqt.INSERT_ON_STATE, )
+            print(index_state + 1, state)
+
         if winner == 0:
             method = "reward"
             print("reward")
@@ -68,6 +72,7 @@ class TestDbTools(unittest.TestCase):
             print("penalize")
         if method != "":
             # TODO il faudrait que l'algo puisse rapidement comprendre que le triangle rend un match nul et que le plateau possede plusieurs symétries
+
             print("insert on table state")
 
 

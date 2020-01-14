@@ -4,6 +4,9 @@ IS_TABLE_EXISTS = """SELECT EXISTS (
    WHERE  table_name = %s
    );"""
 
+SELECT_STAR_FROM_STATE = """SELECT *
+FROM public."State";"""
+
 """ TODO a request that will write:
 
 For example :
