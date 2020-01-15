@@ -8,9 +8,6 @@ import tictactoe
 
 class TestDbTools(unittest.TestCase):
 
-    def setUp(self):
-        self.ttt = tictactoe.tictactoe()
-
     def test_create_image_postgres(self):
         """
         Test if image postgres correctly created
@@ -53,27 +50,6 @@ class TestDbTools(unittest.TestCase):
         assert dbt.dtt.clean_image("c_ttt_" + name) == 0
         assert not dbt.dtt.is_image_exist("c_ttt_" + name)
 
-    def test_insert_new_state(self):
-        """
-        Test if function insert_new_state works
-        """
-        method = ""
-        states, winner = self.ttt.run(random_game=True)
-        for index_state, state in enumerate(states):
-            parameters = (state,)
-            dbt.query_with_parameters(sqt.INSERT_ON_STATE, )
-            print(index_state + 1, state)
-
-        if winner == 0:
-            method = "reward"
-            print("reward")
-        if winner == 1:
-            method = "penalize"
-            print("penalize")
-        if method != "":
-            # TODO il faudrait que l'algo puisse rapidement comprendre que le triangle rend un match nul et que le plateau possede plusieurs symétries
-
-            print("insert on table state")
 
 
 """

@@ -251,15 +251,13 @@ def query_without_parameters(query_without_parameters):
 
 
 # TODO create function to use a query with parameters
-def query_with_parameters(query, parameters, test=False):
+def query_with_parameters(query, parameters, port=5432, test=False):
     """
     Create a query on the database without parameters
     :return: 0 if it works else -1
     """
     if test:
         port = "5433"
-    else:
-        port = "5432"
     connection = ""
     cursor = ""
     try:
@@ -316,3 +314,54 @@ def select_one_with_parameters(query, parameters, port=5432, test=False):
             # closing database connection.
             cursor.close()
             connection.close()
+
+
+def select_star_without_parameters(query, port=5432, test=False):
+    """
+    Select one result on the database with parameters
+    :return: 0 if it works else -1
+    """
+    if test:
+        port = "5433"
+    connection = ""
+    cursor = ""
+    try:
+        connection = psycopg2.connect(user="postgres",
+                                      password="postgres",
+                                      host="192.168.99.100",
+                                      port=port,
+                                      database="postgres")
+        cursor = connection.cursor()
+        #print(query)
+        #print(parameters)
+        cursor.execute(query)
+        res = cursor.fetchall()
+        #print("Query with parameters executed successfully in PostgreSQL ")
+        return res
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error while executing query with parameters in PostgreSQL", error)
+        return -1
+    finally:
+        if connection:
+            # closing database connection.
+            cursor.close()
+            connection.close()
+
+
+
+
+def insert_new_state(states, winner, port=5432):
+    method = ""
+    if winner == 0:
+        method = "reward"
+        print("reward")
+    if winner == 1:
+        method = "penalize"
+        print("penalize")
+    if method != "":
+        for index_state, state in enumerate(states):
+            parameters = (state, index_state + 1, method)
+            dbt.query_with_parameters(sqt.INSERT_ON_STATE, parameters, port)
+            print(index_state + 1, state)
+        # TODO il faudrait que l'algo puisse rapidement comprendre que le triangle rend un match nul et que le plateau possede plusieurs symétries
+        print("insert on table all states")

@@ -80,10 +80,6 @@ class TestTicTacToe(unittest.TestCase):
         self.ttt.print_board_state(states[-1])
         print("Winner :", winner, "\n\n")
 
-    def test_run_db(self):
-        """
-        Test if the db works
-        """
 
 
 
