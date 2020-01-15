@@ -36,7 +36,7 @@ class TestRL_scratch(unittest.TestCase):
         Test if function insert_new_state works
         """
         states, winner = self.ttt.run(random_game=True)
-        self.rs.insert_new_state(states, winner, self.port)
+        assert self.rs.insert_new_state(states, winner, self.port) == 0
         print(dbt.select_star_without_parameters(sqt.SELECT_STAR_FROM_STATE, self.port))
 
 

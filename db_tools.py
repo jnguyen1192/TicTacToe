@@ -31,7 +31,7 @@ def run_db(container_name="postgres", image_name="postgres", port=5432):
                                     environment=environment,
                                     detach=True)
         # TODO debug log here
-        print(container.logs().decode('utf8'))
+        #print(container.logs().decode('utf8'))
         client.close()
         return 0
     except Exception as e:
