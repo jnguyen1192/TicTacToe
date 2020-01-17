@@ -37,6 +37,12 @@ IS_RAW_EXISTS_ON_ACTION = """SELECT EXISTS (
    WHERE  name = %s
    );"""
 
+IS_BOARD_EXISTS_ON_STATE = """SELECT EXISTS (
+   SELECT 1
+   FROM   "State" 
+   WHERE  board = %s
+   );"""
+
 INSERT_ON_STATE = """INSERT INTO public."State"(
     board, "n° move", method)
     VALUES (%s, %s, %s)"""
