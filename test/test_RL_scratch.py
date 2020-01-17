@@ -33,11 +33,22 @@ class TestRL_scratch(unittest.TestCase):
 
     def test_insert_new_state(self):
         """
-        Test if function insert_new_state works
+        Test if function insert_new_state works with an entire random game
         """
         states, winner = self.ttt.run(random_game=True)
         assert self.rs.insert_new_state(states, winner, self.port) == 0
-        print(dbt.select_star_without_parameters(sqt.SELECT_STAR_FROM_STATE, self.port))
+        #print(dbt.select_star_without_parameters(sqt.SELECT_STAR_FROM_STATE, self.port))
+
+    def test_run_game_using_choose_next_position_using_current_state(self):
+        """
+        Test if function choose_next_move_using_current_state
+        """
+        # TODO
+        #   Launch a game
+        #   While game not end
+        #       choose next position using the current board
+        #       execute with next position
+        #       get the current board
 
 
 if __name__ == '__main__':

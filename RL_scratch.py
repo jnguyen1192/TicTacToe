@@ -34,3 +34,25 @@ class RL_scratch:
         except Exception as e:
             print(e)
             return -1
+
+    def choose_next_position_using_current_state(self, state):
+        """
+        Get the next position to choose as (y, x) using db to know if it is a good choice
+        If there was the same probs, choose a random choice betweens the same probs
+        :param state: the current board
+        :return: then next position as (y, x)
+        """
+        # TODO
+        #   We have got
+        #       0 0 0
+        #       0 0 0
+        #       0 0 0
+        #   Using the db for each n°1 move
+        #       According to the sum of reward less the sum of penalize
+        #       We obtains
+        #           0 -2  0
+        #          -2  7 -2
+        #           0 -2  0
+        #   The next move will be (1, 1) in this case
+
+
