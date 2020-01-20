@@ -12,6 +12,14 @@ class TestTicTacToe(unittest.TestCase):
         # TODO implement
         assert True
 
+    def test_get_available_moves(self):
+        available_moves_to_pred_0 = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+        available_moves_to_pred_1 = [(0, 0), (0, 1), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+        move_1 = (0, 2)
+        assert self.ttt.get_available_moves() == available_moves_to_pred_0
+        assert self.ttt.play(move_1) == 0
+        assert self.ttt.get_available_moves() == available_moves_to_pred_1
+
     def test_get_random_move(self):
         """
         Test if function get_random_move works

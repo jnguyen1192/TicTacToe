@@ -98,16 +98,24 @@ class tictactoe:
             return True
         return False
 
-    def get_random_move(self):
+    def get_available_moves(self):
         """
-        Return an available move on the board
-        :return: the coordinate of the move as (y, x)
+        Return availables moves on the board
+        :return:
         """
         available_moves = []
         for i_lines, lines in enumerate(self.board):
             for i_columns, columns in enumerate(lines):
                 if columns == -1:
                     available_moves.append((i_lines, i_columns))
+        return available_moves
+
+    def get_random_move(self):
+        """
+        Return an available move on the board
+        :return: the coordinate of the move as (y, x)
+        """
+        available_moves = self.get_available_moves()
         # Get a random int between 0 and the size of available_moves less one
         if len(available_moves) == 0:
             return None, None

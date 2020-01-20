@@ -37,11 +37,18 @@ class RL_scratch:
             print(e)
             return -1
 
-    def choose_next_position_using_current_state(self, state, num_move):
+    def get_available_move(self, board):
+        """
+        Get the available moves we can do
+        :param board: the current board
+        :return: a list of move as [(y, x) ...]
+        """
+
+    def choose_next_position_using_board(self, board, num_move):
         """
         Get the next position to choose as (y, x) using db to know if it is a good choice
         If there was the same probs, choose a random choice betweens the same probs
-        :param state: the current board
+        :param board: the current board
         :param num_move: the current numero of move
         :return: then next position as (y, x)
         """
