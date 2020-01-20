@@ -80,7 +80,25 @@ class TestTicTacToe(unittest.TestCase):
         self.ttt.print_board_state(states[-1])
         print("Winner :", winner, "\n\n")
 
+    def test_get_current_board_and_play(self):
+        """
+        Test if function get_current_board works
+        """
+        board_to_predict_0 = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
+        board_to_predict_1 = [[-1, -1, 0], [-1, -1, -1], [-1, -1, -1]]
+        move_1 = (0, 2)
+        move_2 = (0, 5)
 
+        assert self.ttt.get_current_board() == board_to_predict_0
+        # the first move on (0, 2) as (y, x)
+        assert self.ttt.play(move_1) == 0
+        assert self.ttt.get_current_board() == board_to_predict_1
+        # the second move on (0, 5) as (y, x) will fail
+        assert self.ttt.play(move_2) == -1
+        assert self.ttt.get_current_board() == board_to_predict_1
+        # the third move on (0, 2) as (y, x) will fail
+        assert self.ttt.play(move_1) == -1
+        assert self.ttt.get_current_board() == board_to_predict_1
 
 
 if __name__ == '__main__':
