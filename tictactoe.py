@@ -17,6 +17,7 @@ class tictactoe:
         self.current_player = 0
         self.end = False
         self.states = []
+        self.num_move = 1
         self.winner = -1
 
     def init_board(self):
@@ -206,12 +207,19 @@ class tictactoe:
             print(e)
             return -1
 
-    def get_current_board(self):
+    def get_board(self):
         """
         Get the current board
         :return: the board as a list
         """
         return self.board
+
+    def get_num_move(self):
+        """
+        Get the current number of move
+        :return: the number of move
+        """
+        return self.num_move
 
     def play(self, move):
         """
@@ -224,6 +232,7 @@ class tictactoe:
                 raise Exception("Cell not available, try another move")
             self.board[y][x] = self.current_player
             self.current_player = (self.current_player + 1) % 2
+            self.num_move += 1
             return 0
         except Exception as e:
             print(e)

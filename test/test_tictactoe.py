@@ -80,7 +80,7 @@ class TestTicTacToe(unittest.TestCase):
         self.ttt.print_board_state(states[-1])
         print("Winner :", winner, "\n\n")
 
-    def test_get_current_board_and_play(self):
+    def test_get_board_get_num_move_and_play(self):
         """
         Test if function get_current_board works
         """
@@ -88,17 +88,20 @@ class TestTicTacToe(unittest.TestCase):
         board_to_predict_1 = [[-1, -1, 0], [-1, -1, -1], [-1, -1, -1]]
         move_1 = (0, 2)
         move_2 = (0, 5)
-
-        assert self.ttt.get_current_board() == board_to_predict_0
+        assert self.ttt.get_board() == board_to_predict_0
+        assert self.ttt.get_num_move() == 1
         # the first move on (0, 2) as (y, x)
         assert self.ttt.play(move_1) == 0
-        assert self.ttt.get_current_board() == board_to_predict_1
+        assert self.ttt.get_board() == board_to_predict_1
+        assert self.ttt.get_num_move() == 2
         # the second move on (0, 5) as (y, x) will fail
         assert self.ttt.play(move_2) == -1
-        assert self.ttt.get_current_board() == board_to_predict_1
+        assert self.ttt.get_board() == board_to_predict_1
+        assert self.ttt.get_num_move() == 2
         # the third move on (0, 2) as (y, x) will fail
         assert self.ttt.play(move_1) == -1
-        assert self.ttt.get_current_board() == board_to_predict_1
+        assert self.ttt.get_board() == board_to_predict_1
+        assert self.ttt.get_num_move() == 2
 
 
 if __name__ == '__main__':
