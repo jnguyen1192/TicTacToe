@@ -37,13 +37,6 @@ class RL_scratch:
             print(e)
             return -1
 
-    def get_available_move(self, board):
-        """
-        Get the available moves we can do
-        :param board: the current board
-        :return: a list of move as [(y, x) ...]
-        """
-
     def choose_next_position_using_board(self, board, num_move):
         """
         Get the next position to choose as (y, x) using db to know if it is a good choice
@@ -52,7 +45,7 @@ class RL_scratch:
         :param num_move: the current numero of move
         :return: then next position as (y, x)
         """
-        # TODO
+        # TODO Instructions
         #   We have got
         #       0 0 0
         #       0 0 0
@@ -64,5 +57,11 @@ class RL_scratch:
         #          -2  7 -2
         #           0 -2  0
         #   The next move will be (1, 1) in this case
+
+        # TODO Algorithm
+        #   Get the available moves
+        #   For each moves
+        #       calculate the reward/penalize
+        #   return the best move or random between best moves
 
 
