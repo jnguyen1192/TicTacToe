@@ -1,6 +1,8 @@
 import sql_queries as sqt
 import db_tools as dbt
 
+from copy import deepcopy
+
 
 class RL_scratch:
     """
@@ -38,7 +40,7 @@ class RL_scratch:
             print(e)
             return -1
 
-    def choose_next_position_using_board(self, board, num_move):
+    def choose_next_position_using_board(self, ttt, num_move):
         """
         Get the next position to choose as (y, x) using db to know if it is a good choice
         If there was the same probs, choose a random choice betweens the same probs
@@ -60,9 +62,30 @@ class RL_scratch:
         #   The next move will be (1, 1) in this case
 
         # TODO Algorithm
-        #   Get the available moves
-        #   For each moves
+        #   1) Get the available moves
+        #   2)For each moves
         #       calculate the reward/penalize
-        #   return the best move or random between best moves
+        #   3)return the best move or random between best moves
+        available_moves = ttt.get_available_moves()
+        index_acc = []
+        for index, available_move in enumerate(available_moves):
+            # deep copy of the current board to have the current board + available_move <=> (current_board + 1)
+            next_board = deepcopy(ttt.board)
+            # affect the move on the board
+            y, x = available_move
+            next_board[y][x] = ttt.current_player
+            # TODO check on the db the next_board prob
+            states = ""  # select * from states where board = next_board
+            acc = 0
+            for state in states:
+                id_state, board, num_move, method = state
+                if method == "reward":
+                    acc += 1
+                if method == "penalize":
+                    acc -= 1
+
+            index_acc.append(acc)
+
+            pass
 
 
