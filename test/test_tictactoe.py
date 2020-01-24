@@ -88,7 +88,16 @@ class TestTicTacToe(unittest.TestCase):
         self.ttt.print_board_state(states[-1])
         print("Winner :", winner, "\n\n")
 
-    def test_get_board_get_num_move_and_play(self):
+    def test_play_not_working(self):
+        """
+        Test if function play works
+        """
+        board_to_predict_0 = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
+        move_1 = (0, -1)
+        assert self.ttt.play(move_1) == -1
+        assert self.ttt.get_board() == board_to_predict_0
+
+    def test_get_board_get_num_move(self):
         """
         Test if function get_current_board works
         """
@@ -110,6 +119,8 @@ class TestTicTacToe(unittest.TestCase):
         assert self.ttt.play(move_1) == -1
         assert self.ttt.get_board() == board_to_predict_1
         assert self.ttt.get_num_move() == 2
+
+
 
 
 if __name__ == '__main__':

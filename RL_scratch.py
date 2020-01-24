@@ -9,6 +9,7 @@ class RL_scratch:
     def insert_new_state(self, states, winner, port=5432):
         """
         Insert the states and the winner of the game on the db
+        State (id, board, num_move, method)
         :param states: the different states to the game
         :param winner: if the player win or lose
         :param port: the port to connect on the db

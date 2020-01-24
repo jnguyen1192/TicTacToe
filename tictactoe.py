@@ -236,6 +236,10 @@ class tictactoe:
         """
         try:
             y, x = move
+            if x not in range(self.width):
+                raise Exception("Wrong move with, x =" + str(x))
+            if y not in range(self.height):
+                raise Exception("Wrong move with, y =" + str(y))
             if self.board[y][x] != -1:
                 raise Exception("Cell not available, try another move")
             self.board[y][x] = self.current_player
