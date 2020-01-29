@@ -7,6 +7,10 @@ IS_TABLE_EXISTS = """SELECT EXISTS (
 SELECT_STAR_FROM_STATE = """SELECT *
 FROM public."State";"""
 
+SELECT_STAR_FROM_STATE_WHERE_BOARD = """SELECT *
+FROM public."State" 
+WHERE board = %s;"""
+
 """ TODO a request that will write:
 
 For example :

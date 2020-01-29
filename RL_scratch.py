@@ -29,7 +29,7 @@ class RL_scratch:
                 for index_state, state in enumerate(states):
                     #   check if state already exist before insert on db
                     #       if state not exists on db
-                    if not dbt.select_one_with_parameters(sqt.IS_BOARD_EXISTS_ON_STATE, (str(state),), port):
+                    if not dbt.select_one_with_parameters(sqt.IS_BOARD_EXISTS_ON_STATE, (str(state), ), port):
                         parameters = (str(state), index_state + 1, method)
                         dbt.query_with_parameters(sqt.INSERT_ON_STATE, parameters, port)
                     #print(index_state + 1, state)
@@ -40,7 +40,20 @@ class RL_scratch:
             print(e)
             return -1
 
-    def choose_next_position_using_board(self, ttt, num_move):
+    def get_states_on_db_using_board(self, board):
+        """
+        Get the list of states using the board
+        :return: The list if it works else -1
+        """
+        try:
+            parameters = (str(board), )
+            star = dbt.select_star_with_parameters(sqt.SELECT_STAR_FROM_STATE_WHERE_BOARD, parameters)
+            return star
+        except Exception as e:
+            print(e)
+            return -1
+
+    def choose_next_position_using_board(self, ttt):
         """
         Get the next position to choose as (y, x) using db to know if it is a good choice
         If there was the same probs, choose a random choice betweens the same probs
@@ -75,7 +88,7 @@ class RL_scratch:
             y, x = available_move
             next_board[y][x] = ttt.current_player
             # TODO check on the db the next_board prob
-            states = ""  # select * from states where board = next_board
+            states = self.get_states_on_db_using_board(next_board)  # select * from states where board = next_board
             acc = 0
             for state in states:
                 id_state, board, num_move, method = state
@@ -84,8 +97,9 @@ class RL_scratch:
                 if method == "penalize":
                     acc -= 1
 
-            index_acc.append(acc)
-
-            pass
+            index_acc.append((acc, available_move))
+        print(index_acc)
+        index_acc = sorted(index_acc)
+        return index_acc[0][1]
 
 

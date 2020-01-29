@@ -346,3 +346,35 @@ def select_star_without_parameters(query, port=5432, test=False):
             # closing database connection.
             cursor.close()
             connection.close()
+
+
+def select_star_with_parameters(query, parameters, port=5432, test=False):
+    """
+    Select one result on the database with parameters
+    :return: 0 if it works else -1
+    """
+    if test:
+        port = "5433"
+    connection = ""
+    cursor = ""
+    try:
+        connection = psycopg2.connect(user="postgres",
+                                      password="postgres",
+                                      host="192.168.99.100",
+                                      port=port,
+                                      database="postgres")
+        cursor = connection.cursor()
+        #print(query)
+        #print(parameters)
+        cursor.execute(query, parameters)
+        res = cursor.fetchall()
+        #print("Query with parameters executed successfully in PostgreSQL ")
+        return res
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error while executing query with parameters in PostgreSQL", error)
+        return -1
+    finally:
+        if connection:
+            # closing database connection.
+            cursor.close()
+            connection.close()
