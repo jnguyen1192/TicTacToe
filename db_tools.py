@@ -163,12 +163,28 @@ def new_backup():
     Create a backup using the corresponding container
     :return: the file name if it works else -1
     """
-    # TODO
     #   Use this command to connect to the DB on the container
     #       PGPASSWORD=postgres pgsql -h 192.168.99.100 -p 5432 -U postgres
     file_name = datetime.now().replace(microsecond=0).strftime("%Y%m%dT%H%M%S") + "_postgres.sql"
     res = subprocess.run(
         ["cmd", "/c", "docker", "exec", "-t", "c_ttt_postgres", "pg_dump", "-c", "-U", "postgres", ">", os.path.join(get_pwd(), "backup_postgres", file_name)],
+        capture_output=True)
+    if res.returncode != 0:
+        return -1
+    return file_name
+
+
+def new_csv(table_name):
+    """
+    Create a csv using the corresponding table
+    :return: the file name if it works else -1
+    """
+    #   Use this command to connect to the DB on the container
+    #       PGPASSWORD=postgres pgsql -h 192.168.99.100 -p 5432 -U postgres
+    file_name = table_name + "_" + datetime.now().replace(microsecond=0).strftime("%Y%m%dT%H%M%S") + ".csv"
+    # TODO Update the command to copy the selected table
+    res = subprocess.run(
+        ["cmd", "/c", "docker", "exec", "-t", "c_ttt_postgres", "pg_dump", "-c", "-U", "postgres", ">", os.path.join(get_pwd(), "csv", file_name)],
         capture_output=True)
     if res.returncode != 0:
         return -1
@@ -378,3 +394,12 @@ def select_star_with_parameters(query, parameters, port=5432, test=False):
             # closing database connection.
             cursor.close()
             connection.close()
+
+
+def export_table_to_csv(table_name):
+    # TODO
+    #   First:  raws = Select * from table_name
+    #           raws into dataframe
+    #   Second: create a file called table_name_YYMMDDSS.csv
+    #   Third: write dataframe into table_name_YYMMDDSS.csv
+    pass

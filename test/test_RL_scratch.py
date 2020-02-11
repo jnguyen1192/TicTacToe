@@ -44,14 +44,17 @@ class TestRL_scratch(unittest.TestCase):
         """
         Test if function choose_next_move_using_current_state
         """
-        # TODO fufill db with states
-        for i in range(10):
+        # fufill db with states
+        for i in range(100000):
+            self.ttt = tictactoe.tictactoe()
             states, winner = self.ttt.run(random_game=True)
             assert self.rs.insert_new_state(states, winner, self.port) == 0
+        # TODO Export the csv using the db
+        self.ttt = tictactoe.tictactoe()
         print("Test run npucs", self.ttt.board)
         self.ttt.play((1, 0))
         print("Test run npucs after first move", self.ttt.board)
-        print(self.rs.choose_next_position_using_board(self.ttt))
+        print(self.rs.choose_next_position_using_board(self.ttt, self.port))
         # TODO
         #   Launch a game
         #   While game not end
