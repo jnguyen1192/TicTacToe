@@ -396,10 +396,37 @@ def select_star_with_parameters(query, parameters, port=5432, test=False):
             connection.close()
 
 
-def export_table_to_csv(table_name):
-    # TODO
-    #   First:  raws = Select * from table_name
-    #           raws into dataframe
-    #   Second: create a file called table_name_YYMMDDSS.csv
-    #   Third: write dataframe into table_name_YYMMDDSS.csv
-    pass
+def export_table_to_csv(table_name, port=5432, test=False):
+    """
+    Export the table data into the corresponding csv file
+    :param table_name: the name of the table we want to export
+    :return: 0 if it works else -1
+    """
+
+    if test:
+        port = "5433"
+    connection = ""
+    cursor = ""
+    try:
+        # TODO
+        #   First:  raws = Select * from table_name
+        #           raws into dataframe
+        #   Second: create a file called table_name_YYMMDDSS.csv
+        #   Third: write dataframe into table_name_YYMMDDSS.csv
+        connection = psycopg2.connect(user="postgres",
+                                      password="postgres",
+                                      host="192.168.99.100",
+                                      port=port,
+                                      database="postgres")
+        cursor = connection.cursor()
+        #print(query)
+        #print(parameters)
+        # First
+        # Use sql to set the table name as a parameter
+        #from psycopg2 import sql # https://stackoverflow.com/questions/13793399/passing-table-name-as-a-parameter-in-psycopg2
+        #cusql.SQL()
+        #cursor.execute(query, parameters)
+        pass
+        return 0
+    except Exception as e:
+        return -1
