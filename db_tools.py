@@ -408,40 +408,26 @@ def export_table_to_csv(table_name, port=5432, test=False):
     connection = ""
     cursor = ""
     try:
-        print("Debug0")
-        # TODO
         #   First:  raws = Select * from table_name
         #           raws into dataframe
-        #   Second: create a file called table_name_YYMMDDSS.csv
-        #   Third: write dataframe into table_name_YYMMDDSS.csv
         connection = psycopg2.connect(user="postgres",
                                       password="postgres",
                                       host="192.168.99.100",
                                       port=port,
                                       database="postgres")
         cursor = connection.cursor()
-        print("Debug1")
-        #print(query)
-        #print(parameters)
-        # First
         # Use sql to set the table name as a parameter
         from psycopg2 import sql # https://stackoverflow.com/questions/13793399/passing-table-name-as-a-parameter-in-psycopg2
+        from datetime import datetime
+        str_date = datetime.today().strftime('%Y%m%d')
         query = "select * from \"%s\"" % table_name
-        cursor.execute(query)
-        print(type(query))
-        print(query)
-        print(type(str(query)))
-        print(str(query))
-        print(cursor.fetchall())
         outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(query) # https://stackoverflow.com/questions/22776849/how-to-save-results-of-postgresql-to-csv-excel-file-using-psycopg2
 
-        print("Before open file")
-        with open('resultsfile', 'w') as f:
-            print("Open file")
+        #   Second: create a file called table_name_YYMMDDSS.csv
+        with open(table_name + "_" + str_date + ".csv", 'w') as f:
+            #   Third: write dataframe into table_name_YYMMDDSS.csv
             cursor.copy_expert(outputquery, f)
-
         connection.close()
-
         return 0
     except Exception as e:
         print(e)

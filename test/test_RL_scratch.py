@@ -73,6 +73,24 @@ class TestRL_scratch(unittest.TestCase):
             states, winner = self.ttt.run(random_game=True)
             assert self.rs.insert_new_state(states, winner, self.port) == 0
         assert dbt.export_table_to_csv("State", test=True) == 0
+        # TODO optionally:
+        #   Test if the csv file contains header and some raw respecting the format of table "State" (int, str, int, str)
+
+    def test_read_table_csv(self):
+        """
+        Test if the function read table csv works
+        """
+        # TODO to build a strategy it need to create an object with unknowing number of parameter and unknowing number of output
+        import csv
+        # @source: https://www.alexkras.com/how-to-read-csv-file-in-python/
+        with open("State_20200219.csv") as f:
+            reader = csv.reader(f)
+            next(reader)  # skip header
+            data = []
+            for row in reader:
+                data.append(row)
+            print(data)
+
 
 
 if __name__ == '__main__':
