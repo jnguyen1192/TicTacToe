@@ -62,6 +62,18 @@ class TestRL_scratch(unittest.TestCase):
         #       execute with next position using play()
         #       get the current board
 
+    def test_export_table_to_csv(self):
+        """
+        Test if the function export_table_to_csv works
+        """
+
+        # fufill db with states
+        for i in range(10):
+            self.ttt = tictactoe.tictactoe()
+            states, winner = self.ttt.run(random_game=True)
+            assert self.rs.insert_new_state(states, winner, self.port) == 0
+        assert dbt.export_table_to_csv("State", test=True) == 0
+
 
 if __name__ == '__main__':
     unittest.main()

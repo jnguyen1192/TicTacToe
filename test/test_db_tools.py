@@ -51,7 +51,6 @@ class TestDbTools(unittest.TestCase):
         assert not dbt.dtt.is_image_exist("c_ttt_" + name)
 
 
-
 """
     def test_create_backup(self):
         name = "postgres"

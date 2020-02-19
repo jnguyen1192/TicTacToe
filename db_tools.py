@@ -408,6 +408,7 @@ def export_table_to_csv(table_name, port=5432, test=False):
     connection = ""
     cursor = ""
     try:
+        print("Debug0")
         # TODO
         #   First:  raws = Select * from table_name
         #           raws into dataframe
@@ -419,14 +420,29 @@ def export_table_to_csv(table_name, port=5432, test=False):
                                       port=port,
                                       database="postgres")
         cursor = connection.cursor()
+        print("Debug1")
         #print(query)
         #print(parameters)
         # First
         # Use sql to set the table name as a parameter
-        #from psycopg2 import sql # https://stackoverflow.com/questions/13793399/passing-table-name-as-a-parameter-in-psycopg2
-        #cusql.SQL()
-        #cursor.execute(query, parameters)
-        pass
+        from psycopg2 import sql # https://stackoverflow.com/questions/13793399/passing-table-name-as-a-parameter-in-psycopg2
+        query = "select * from \"%s\"" % table_name
+        cursor.execute(query)
+        print(type(query))
+        print(query)
+        print(type(str(query)))
+        print(str(query))
+        print(cursor.fetchall())
+        outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(query) # https://stackoverflow.com/questions/22776849/how-to-save-results-of-postgresql-to-csv-excel-file-using-psycopg2
+
+        print("Before open file")
+        with open('resultsfile', 'w') as f:
+            print("Open file")
+            cursor.copy_expert(outputquery, f)
+
+        connection.close()
+
         return 0
     except Exception as e:
+        print(e)
         return -1
