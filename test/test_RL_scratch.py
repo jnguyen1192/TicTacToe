@@ -62,6 +62,31 @@ class TestRL_scratch(unittest.TestCase):
         #       execute with next position using play()
         #       get the current board
 
+    def test_run_normal_game_with_RL_1(self):
+        """
+        Test if function run_normal_game works
+        """
+        i = 0
+        while True:
+            i += 1
+            # game ininitialized with ttt
+            # first player play using db with naive rl
+            self.ttt.play(self.rs.choose_next_position_using_board(self.ttt, self.port))
+            # TODO check if game is ended
+            # second player play using random move
+            self.ttt.play(self.ttt.get_random_move())
+            # TODO check if game is ended
+            if i==1000:
+                assert False
+                break
+        assert True
+
+
+
+
+
+
+
     def test_export_table_to_csv(self):
         """
         Test if the function export_table_to_csv works

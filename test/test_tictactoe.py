@@ -44,6 +44,7 @@ class TestTicTacToe(unittest.TestCase):
         self.ttt.print_board_state(states[-1])
         print("Winner :", winner, "\n\n")
 
+
     def test_run_predefine_game_2(self):
         """
         Test if function run works with the predefine moves
