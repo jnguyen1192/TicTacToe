@@ -39,6 +39,22 @@ class tictactoe:
             board.append(line)
         return board
 
+    def get_game_state(self):
+        """
+        Get the game state,
+        It can be:
+            - 0: Player 1 won
+            - 1: Player 1 lost
+            - 2: Draw game
+            - 3: In progress
+        :return: the corresponding int code
+        """
+        if self.is_current_player_win():
+            return self.current_player
+        if len(self.get_available_moves()) == 0:
+            return 2
+        return 3
+
     def print_board_state(self, board):
         """
         Print the current state

@@ -66,26 +66,33 @@ class TestRL_scratch(unittest.TestCase):
         """
         Test if function run_normal_game works
         """
-        i = 0
-        while True:
-            i += 1
-            # game ininitialized with ttt
-            # first player play using db with naive rl
-            self.ttt.play(self.rs.choose_next_position_using_board(self.ttt, self.port))
-            # TODO check if game is ended
-            # second player play using random move
-            self.ttt.play(self.ttt.get_random_move())
-            # TODO check if game is ended
-            if i==1000:
-                assert False
-                break
-        assert True
-
-
-
-
-
-
+        try:
+            i = 0
+            winner = -1
+            while True:
+                i += 1
+                # game ininitialized with ttt
+                # first player play using db with naive rl
+                self.ttt.play(self.rs.choose_next_position_using_board(self.ttt, self.port))
+                # TODO check if game is ended
+                winner = self.ttt.get_game_state()
+                if winner != 3:
+                    break
+                # second player play using random move
+                self.ttt.play(self.ttt.get_random_move())
+                # TODO check if game is ended
+                winner = self.ttt.get_game_state()
+                if winner != 3:
+                    break
+                if i == 1000:
+                    assert False
+            winner_str = ["Joueur 1", "Joueur 2", "Personne"]
+            self.ttt.print_board_state(self.ttt.board)
+            print("Le gagnant est :", winner_str[winner])
+            assert True
+        except Exception as e:
+            print(e)
+            assert False
 
     def test_export_table_to_csv(self):
         """

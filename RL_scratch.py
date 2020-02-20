@@ -98,7 +98,7 @@ class RL_scratch:
                     acc -= 1
 
             index_acc.append((acc, available_move))
-        print(index_acc)
+        #print(index_acc)
         index_acc = sorted(index_acc)
         return index_acc[0][1]
 
