@@ -74,25 +74,34 @@ class TestRL_scratch(unittest.TestCase):
                 # game ininitialized with ttt
                 # first player play using db with naive rl
                 self.ttt.play(self.rs.choose_next_position_using_board(self.ttt, self.port))
-                # TODO check if game is ended
+                # check if game is ended
                 winner = self.ttt.get_game_state()
                 if winner != 3:
                     break
                 # second player play using random move
                 self.ttt.play(self.ttt.get_random_move())
-                # TODO check if game is ended
+                # check if game is ended
                 winner = self.ttt.get_game_state()
                 if winner != 3:
                     break
                 if i == 1000:
                     assert False
-            winner_str = ["Joueur 1", "Joueur 2", "Personne"]
-            self.ttt.print_board_state(self.ttt.board)
-            print("Le gagnant est :", winner_str[winner])
+            #winner_str = ["Joueur 1", "Joueur 2", "Personne"]
+            #self.ttt.print_board_state(self.ttt.board)
+            #print("Le gagnant est :", winner_str[winner])
             assert True
         except Exception as e:
             print(e)
             assert False
+
+    def test_experience_to_plot_1(self):
+        """
+        Test if the experience to create a plot works correctly
+        """
+        # TODO to implement
+        #   Use the test test_run_game_using_choose_next_position_using_current_state and test_run_normal_game_with_RL_1
+        #       train the RL while fufill the db with 10/100/1000/10000 games
+        #       get the number of win/loss/draw for each training versus a random player moves
 
     def test_export_table_to_csv(self):
         """
