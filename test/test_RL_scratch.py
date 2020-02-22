@@ -40,15 +40,18 @@ class TestRL_scratch(unittest.TestCase):
             assert self.rs.insert_new_state(states, winner, self.port) == 0
         #print(dbt.select_star_without_parameters(sqt.SELECT_STAR_FROM_STATE, self.port))
 
+    def train_naive_rl(self, nb_game=10):
+        # fufill db with states
+        for i in range(nb_game):
+            self.ttt = tictactoe.tictactoe()
+            states, winner = self.ttt.run(random_game=True)
+            assert self.rs.insert_new_state(states, winner, self.port) == 0
+
     def test_run_game_using_choose_next_position_using_current_state(self):
         """
         Test if function choose_next_move_using_current_state
         """
-        # fufill db with states
-        for i in range(100000):
-            self.ttt = tictactoe.tictactoe()
-            states, winner = self.ttt.run(random_game=True)
-            assert self.rs.insert_new_state(states, winner, self.port) == 0
+        self.train_naive_rl()
         # TODO Export the csv using the db
         self.ttt = tictactoe.tictactoe()
         print("Test run npucs", self.ttt.board)
@@ -100,8 +103,14 @@ class TestRL_scratch(unittest.TestCase):
         """
         # TODO to implement
         #   Use the test test_run_game_using_choose_next_position_using_current_state and test_run_normal_game_with_RL_1
-        #       train the RL while fufill the db with 10/100/1000/10000 games
-        #       get the number of win/loss/draw for each training versus a random player moves
+        #       1) train the RL while fufill the db with 10/100/1000/10000 games
+        #           1.a) train and record on db
+        #           2.b) play 100 games versus the random player moves
+        #           3.c) clean the table state
+        #       2) get the number of win/loss/draw for each training versus a random player moves and get the time
+
+
+
 
     def test_export_table_to_csv(self):
         """
