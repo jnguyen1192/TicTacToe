@@ -105,10 +105,15 @@ class TestRL_scratch(unittest.TestCase):
         #   Use the test test_run_game_using_choose_next_position_using_current_state and test_run_normal_game_with_RL_1
         #       1) train the RL while fufill the db with 10/100/1000/10000 games
         #           1.a) train and record on db
-        #           2.b) play 100 games versus the random player moves
-        #           3.c) clean the table state
+        #           1.b) play 100 games versus the random player moves
+        #           1.c) clean the table state
         #       2) get the number of win/loss/draw for each training versus a random player moves and get the time
-
+        trains = [10, 100, 1000, 10000]
+        for train in trains:
+            # 1.a)
+            self.train_naive_rl(train)
+            # 1.b)
+            # TODO refactor test_run_normal_game_with_RL_1 to have a game with a result
 
 
 
